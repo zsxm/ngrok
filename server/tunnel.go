@@ -27,10 +27,10 @@ var defaultPortMap = map[string]int{
  *         route public traffic to a firewalled endpoint.
  */
 type Tunnel struct {
-	// request that opened the tunnel
+	// 打开一个通道的请求
 	req *msg.ReqTunnel
 
-	// time when the tunnel was opened
+	// 通道打开的时间
 	start time.Time
 
 	// public url
@@ -39,7 +39,7 @@ type Tunnel struct {
 	// tcp listener
 	listener *net.TCPListener
 
-	// control connection
+	// 链接控制
 	ctl *Control
 
 	// logger

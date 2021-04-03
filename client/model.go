@@ -198,7 +198,7 @@ func (c *ClientModel) Run() {
 			wait = 1 * time.Second
 		}
 
-		log.Info("Waiting %d seconds before reconnecting", int(wait.Seconds()))
+		log.Info("警告 %d 秒后重新尝试连接", int(wait.Seconds()))
 		time.Sleep(wait)
 		// exponentially increase wait time
 		wait = 2 * wait

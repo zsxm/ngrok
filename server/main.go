@@ -55,6 +55,13 @@ func NewProxy(pxyConn conn.Conn, regPxy *msg.RegProxy) {
 // for ease of deployment. The hope is that by running on port 443, using
 // TLS and running all connections over the same port, we can bust through
 // restrictive firewalls.
+/**
+//侦听传入的控制和代理连接
+//我们监听同一端口上的传入控制和代理连接
+//便于部署。希望通过在端口443上运行
+//TLS和在同一个端口上运行所有连接，我们可以突破
+//限制性防火墙。
+*/
 func tunnelListener(addr string, tlsConfig *tls.Config) {
 	// listen for incoming connections
 	listener, err := conn.Listen(addr, "tun", tlsConfig)

@@ -94,7 +94,7 @@ func Dial(addr, typ string, tlsCfg *tls.Config) (conn *loggedConn, err error) {
 	}
 
 	conn = wrapConn(rawConn, typ)
-	conn.Debug("New connection to: %v", rawConn.RemoteAddr())
+	conn.Debug("一个新的链接到: %v", rawConn.RemoteAddr())
 
 	if tlsCfg != nil {
 		conn.StartTLS(tlsCfg)

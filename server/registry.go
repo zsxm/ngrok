@@ -39,6 +39,7 @@ func NewTunnelRegistry(cacheSize uint64, cacheFile string) *TunnelRegistry {
 	// to encode or decode any non-primitive types that haven't been "registered"
 	// with it. Since we store cacheUrl objects, we need to register them here first
 	// for the encoding/decoding to work
+	//对于未注册的非基本类型进行编码解码操作
 	var urlobj cacheUrl
 	gob.Register(urlobj)
 
