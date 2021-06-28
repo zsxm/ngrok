@@ -1,4 +1,4 @@
-module github.com/zsxm/ngrok
+module ngrok
 
 go 1.16
 
