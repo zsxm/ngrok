@@ -1,3 +1,10 @@
 .idea
 *.iml
 *.exe
+*.crt
+*.csr
+*.key
+*.pem
+./ngrokd
+./ngrok
+cmd

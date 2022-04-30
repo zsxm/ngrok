@@ -13,17 +13,17 @@ https://blog.csdn.net/sunansheng/article/details/48372149
 证书生成过程需要一个NGROK_BASE_DOMAIN。 
 以ngrok官方随机生成的地址693c358d.ngrok.com为例，
 其NGROK_BASE_DOMAIN就是"ngrok.com"，
-如果你要 提供服务的地址为"example.s.snsxm.top"，
-那NGROK_BASE_DOMAIN就应该 是"s.snsxm.top"。
+如果你要 提供服务的地址为"example.chan.yanghy.cn"，
+那NGROK_BASE_DOMAIN就应该 是"chan.yanghy.cn"。
 
-以NGROK_BASE_DOMAIN="s.snsxm.top"为例
+以NGROK_BASE_DOMAIN="chan.yanghy.cn"为例
 ```
 ```text
 cd ~/goproj/src/github.com/inconshreveable/ngrok
 openssl genrsa -out rootCA.key 2048
-openssl req -x509 -new -nodes -key rootCA.key -subj "/CN=s.snsxm.top" -days 5000 -out rootCA.pem
+openssl req -x509 -new -nodes -key rootCA.key -subj "/CN=chan.yanghy.cn" -days 5000 -out rootCA.pem
 openssl genrsa -out device.key 2048
-openssl req -new -key device.key -subj "/CN=s.snsxm.top" -out device.csr
+openssl req -new -key device.key -subj "/CN=chan.yanghy.cn" -out device.csr
 openssl x509 -req -in device.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out device.crt -days 5000
 
 ```
@@ -48,18 +48,18 @@ cp device.key assets/server/tls/snakeoil.key
 服务端和客户端配置
 ```text
 1、启动ngrokd
-ngrokd -domain="s.snsxm.top" -httpAddr=":80" -httpsAddr=":443" -tunnelAddr=":4443"
+ngrokd -domain="chan.yanghy.cn" -httpAddr=":80" -httpsAddr=":443" -tunnelAddr=":4443"
 
 2、启动ngrok方式1 还是使用方式2吧
 配置文件ngrok.cfg
-server_addr: "s.snsxm.top:4443"
+server_addr: "chan.yanghy.cn:4443"
 trust_host_root_certs: false
 执行 ngrok -subdomain example -config=ngrok.cfg 8080
 或 ngrok -config=ngrok.cfg -subdomain demo 80
 
 3、启动ngrok方式2
 配置文件debug.yml
-server_addr: snsxm.top:4443
+server_addr: yanghy.cn:4443
 trust_host_root_certs: false
 tunnels:
   demo:
