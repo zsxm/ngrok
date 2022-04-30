@@ -258,11 +258,11 @@ func (t *Tunnel) HandlePublicConnection(publicConn conn.Conn) {
 	for i := 0; i < (2 * proxyMaxPoolSize); i++ {
 		// get a proxy connection
 		if proxyConn, err = t.ctl.GetProxy(); err != nil {
-			t.Warn("Failed to get proxy connection: %v", err)
+			t.Warn("无法获取代理连接: %v", err)
 			return
 		}
 		defer proxyConn.Close()
-		t.Info("Got proxy connection %s", proxyConn.Id())
+		t.Info("有代理连接 %s", proxyConn.Id())
 		proxyConn.AddLogPrefix(t.Id())
 
 		// tell the client we're going to start using this proxy connection

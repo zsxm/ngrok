@@ -45,7 +45,7 @@ func startHttpListener(addr string, tlsCfg *tls.Config) (listener *conn.Listener
 		proto = "https"
 	}
 
-	log.Info("Listening for public %s connections on %v", proto, listener.Addr.String())
+	log.Info("监听公用的协议 %s 链接地址 %v", proto, listener.Addr.String())
 	go func() {
 		for conn := range listener.Conns {
 			go httpHandler(conn, proto)
@@ -70,14 +70,16 @@ func httpHandler(c conn.Conn, proto string) {
 
 	// multiplex by extracting the Host header, the vhost library
 	vhostConn, err := vhost.HTTP(c)
+
 	if err != nil {
-		c.Warn("Failed to read valid %s request: %v", proto, err)
+		c.Warn("未能读取有效的 %s request: %v", proto, err)
 		c.Write([]byte(BadRequest))
 		return
 	}
 
 	// read out the Host header and auth from the request
 	host := strings.ToLower(vhostConn.Host())
+
 	auth := vhostConn.Request.Header.Get("Authorization")
 
 	// done reading mux data, free up the request memory
@@ -86,12 +88,14 @@ func httpHandler(c conn.Conn, proto string) {
 	// We need to read from the vhost conn now since it mucked around reading the stream
 	c = conn.Wrap(vhostConn, "pub")
 
-	// multiplex to find the right backend host
-	c.Debug("Found hostname %s in request", host)
+	fmt.Println(c.RemoteAddr().String())
+	// 多路复用以找到正确的后端主机
+	c.Debug("Found hostname %s in request, URL:%s", host)
 	tunnel := tunnelRegistry.Get(fmt.Sprintf("%s://%s", proto, host))
 	if tunnel == nil {
-		c.Info("No tunnel found for hostname %s", host)
+		c.Info("找不到主机名的隧道 %s", host)
 		c.Write([]byte(fmt.Sprintf(NotFound, len(host)+18, host)))
+
 		return
 	}
 

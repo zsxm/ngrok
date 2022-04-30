@@ -1,6 +1,6 @@
-server_addr: s.snsxm.top:4443
+server_addr: s.snsxm.top:11143
 trust_host_root_certs: false
 tunnels:
   demo:
     proto:
-      http: 8080
+      http: 11000

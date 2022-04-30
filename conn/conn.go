@@ -47,6 +47,8 @@ func wrapConn(conn net.Conn, typ string) *loggedConn {
 		wrapped := &loggedConn{c, conn, log.NewPrefixLogger(), rand.Int31(), typ}
 		wrapped.AddLogPrefix(wrapped.Id())
 		return wrapped
+	default:
+		log.Info("未知类型的链接 %s", c)
 	}
 
 	return nil
@@ -76,7 +78,7 @@ func Listen(addr, typ string, tlsCfg *tls.Config) (l *Listener, err error) {
 			if tlsCfg != nil {
 				c.Conn = tls.Server(c.Conn, tlsCfg)
 			}
-			c.Info("New connection from %v", c.RemoteAddr())
+			c.Info("新的链接 %v", c.RemoteAddr())
 			l.Conns <- c
 		}
 	}()
