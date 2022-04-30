@@ -41,7 +41,8 @@ ngrok通过bindata将ngrok源码目录下的assets目录（资源文件）
 assets/client/tls和assets/server/tls下分别存放着用于ngrok和ngrokd的默认证书文件，
 我们需要将它们替换成我们自己生成的：(因此这一步务必放在编译可执行文件之前)
 
-cp rootCA.pem assets/client/tls/ngrokroot.crt
+cp rootCA.pem assets/client/tls/snakeoilca.crt
+cp device.key assets/client/tls/snakeoilca.key
 cp device.crt assets/server/tls/snakeoil.crt
 cp device.key assets/server/tls/snakeoil.key
 ```
